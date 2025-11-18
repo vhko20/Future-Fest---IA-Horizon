@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌳 Protetor Selvagem - Resultado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #055b03;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        }
+
+        .header {
+            background: #2a7e1e;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px 30px;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f9fafb;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f52b14;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            background: #e3e900;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-container {
+            margin-top: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-container .btn {
+            flex: 1;
+            max-width: 260px;
+        }
+
+        .btn-container .btn-secondary {
+            padding: 12px 28px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .btn-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-container .btn {
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header .subtitle {
+                font-size: 1rem;
+            }
+
+            input, .btn {
+                padding: 14px 16px;
+                font-size: 15px;
+            }
+        }
+
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌳 Protetor Selvagem</h1>
+            <p class="subtitle">Sua visão foi transformada em realidade!</p>
+        </div>
+        
+        <div class="content">
+            <div id="resultado" class="resultado fade-in">
+                <h2>🌎 Mundo Perfeito de <span id="nomeExibido" style="color: #f52b14;"></span></h2>
+                <div class="visao-card">
+                    <h3>📝 Sua Visão:</h3>
+                    <p id="visaoTexto"></p>
+                </div>
+                <div class="imagem-container">
+                    <h3>🎨 Ilustração Realista:</h3>
+                    <img id="imagemResultado" src="" alt="Mundo perfeito">
+                </div>
+                <div class="btn-container">
+                    <a href="/" class="btn btn-secondary">🏠 Voltar ao Início</a>
+                    <a href="/mundo_perfeito.html" class="btn">🔄 Gerar Outro Mundo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obter parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const nome = urlParams.get('nome');
+        const mundoPerfeito = urlParams.get('mundo_perfeito');
+        const imagemUrl = urlParams.get('imagem_url');
+
+        // Exibir os dados
+        document.getElementById('nomeExibido').textContent = nome || 'Usuário';
+        document.getElementById('visaoTexto').textContent = `"${mundoPerfeito || 'Descrição não disponível'}"`;
+        document.getElementById('imagemResultado').src = imagemUrl || '';
+        document.getElementById('imagemResultado').alt = `Mundo perfeito de ${nome || 'Usuário'}`;
+
+        // Adicionar efeito de clique na imagem
+        document.getElementById('imagemResultado').addEventListener('click', function() {
+            // Abrir imagem em nova aba
+            window.open(this.src, '_blank');
+        });
+    </script>
+</body>
+</html>

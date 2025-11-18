@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Remove margens e faz o vídeo ocupar toda a tela */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+ 
+      /* Container que segura o vídeo */
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+ 
+      /* Vídeo ocupa toda a tela */
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* mantém proporção e cobre toda a tela */
+        cursor: pointer;
+      }
+ 
+      /* Camada transparente para capturar o clique */
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <!-- Espaço para você colocar o vídeo -->
+      <video id="videoBotao" autoplay muted loop>
+        <!-- Substitua o caminho abaixo pelo seu vídeo -->
+        <source src="/video/animaçao.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeos em HTML5.
+      </video>
+ 
+      <!-- Camada invisível que cobre o vídeo e funciona como botão -->
+      <div class="overlay"></div>
+      <script>
+        document.querySelectorAll(".overlay, video").forEach((element) => {
+          element.addEventListener("click", () => {
+            window.location.href = "pergunta_nome.html";
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
+ 

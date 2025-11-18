@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Mundo Perfeito - Qual é o seu nome?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #055b03;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        }
+
+        .header {
+            background: #2a7e1e;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.25), transparent 55%);
+            pointer-events: none;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hidden-audio {
+            display: none;
+        }
+
+        .feedback {
+            font-size: 0.95rem;
+            color: #1f2937;
+            min-height: 1.4em;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .loading-inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .loading-inline.hidden {
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(5, 91, 3, 0.2);
+            border-top-color: #e3e900;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .content {
+            padding: 40px 30px;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f9fafb;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f52b14;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            background: #e3e900;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header .subtitle {
+                font-size: 1rem;
+            }
+
+            input, .btn {
+                padding: 14px 16px;
+                font-size: 15px;
+            }
+        }
+
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌳 Protetor Selvagem</h1>
+            <p class="subtitle">Vamos começar conhecendo você!</p>
+            <img src="/imagem/CURUPIRA_OI.png" alt="Curupira" style="position: absolute; top: 10px; left: 0; width: 260px; max-width: 40vw;">
+        </div>
+        
+        <div class="content">
+            <div style="margin-bottom: 20px;">
+                <a href="/">
+                    <button class="btn btn-secondary">
+                        ← Voltar
+                    </button>
+                </a>
+            </div>
+            
+            <!-- Áudio oculto para disparar o reconhecimento -->
+            <div aria-hidden="true">
+                <audio id="audioPergunta" autoplay class="hidden-audio">
+                    <source src="/audio_pergunta" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+
+            <!-- FORMULÁRIO controlado por voz -->
+            <form action="/mundo_perfeito.html" method="GET" novalidate>
+                <div class="form-group">
+                    <label for="nome" class="form-label">Qual é o seu nome?</label>
+                    <input type="text" id="nome" name="nome" placeholder="Aguarde, vamos capturar sua voz..." required autocomplete="off" readonly>
+                </div>
+                <p class="feedback" id="microfone-feedback"></p>
+                <div id="loading-nome" class="loading-inline hidden">
+                    <div class="loading-spinner" role="status" aria-hidden="true"></div>
+                    <p id="loading-nome-text">Carregando...</p>
+                </div>
+                <button type="button" id="retry-btn" class="btn btn-secondary" hidden>Tentar novamente</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const nomeInput = document.getElementById('nome');
+            const feedback = document.getElementById('microfone-feedback');
+            const formulario = document.querySelector('form');
+            const retryBtn = document.getElementById('retry-btn');
+            const audioPergunta = document.getElementById('audioPergunta');
+            const loadingContainer = document.getElementById('loading-nome');
+            const loadingText = document.getElementById('loading-nome-text');
+            let reconhecimentoAgendado = false;
+            let envioAgendado = false;
+
+            const limparTexto = (texto) => texto
+                .replace(/[0-9]/g, '')
+                .replace(/[.,!?;:]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            const extrairNome = (textoOriginal) => {
+                const texto = limparTexto(textoOriginal.toLowerCase());
+                const gatilhos = [
+                    'meu nome e',
+                    'meu nome é',
+                    'o meu nome e',
+                    'o meu nome é',
+                    'eu me chamo',
+                    'me chamo',
+                    'eu sou',
+                    'sou',
+                    'aqui é',
+                    'meu nome',
+                    'me chamo de'
+                ];
+
+                let reduzido = texto;
+                gatilhos.forEach((gatilho) => {
+                    if (reduzido.startsWith(gatilho)) {
+                        reduzido = reduzido.slice(gatilho.length).trim();
+                    }
+                });
+
+                reduzido = reduzido.replace(/^(oi|ol[aá]|bom dia|boa tarde|boa noite|prazer)\s+/i, '').trim();
+
+                if (!reduzido) {
+                    return '';
+                }
+
+                const palavras = reduzido.split(' ');
+                const nome = palavras[0];
+                const nomeLimpo = nome.normalize('NFD').replace(/[^a-zA-Z\u00C0-\u017F]/g, '');
+
+                if (!nomeLimpo) {
+                    return '';
+                }
+
+                return nomeLimpo.charAt(0).toUpperCase() + nomeLimpo.slice(1);
+            };
+
+            const mostrarLoading = (mensagem) => {
+                loadingText.textContent = mensagem || 'Carregando...';
+                loadingContainer.classList.remove('hidden');
+            };
+
+            const esconderLoading = () => {
+                loadingContainer.classList.add('hidden');
+            };
+
+            const mostrarRetry = (mensagem) => {
+                if (mensagem) {
+                    feedback.textContent = mensagem;
+                }
+                retryBtn.hidden = false;
+                envioAgendado = false;
+            };
+
+            const esconderRetry = () => {
+                retryBtn.hidden = true;
+            };
+
+            esconderRetry();
+
+            if (!SpeechRecognition) {
+                nomeInput.removeAttribute('readonly');
+                feedback.textContent = 'Seu navegador não suporta reconhecimento de voz. Digite seu nome e pressione Enter.';
+                retryBtn.hidden = true;
+                return;
+            }
+
+            const recognizer = new SpeechRecognition();
+            recognizer.lang = 'pt-BR';
+            recognizer.interimResults = false;
+            recognizer.maxAlternatives = 1;
+
+            const iniciarReconhecimento = () => {
+                if (reconhecimentoAgendado) {
+                    return;
+                }
+                reconhecimentoAgendado = true;
+                esconderRetry();
+                feedback.textContent = 'Preparando microfone... conceda acesso quando solicitado.';
+                window.setTimeout(() => {
+                    try {
+                        recognizer.start();
+                    } catch (error) {
+                        if (error.name !== 'InvalidStateError') {
+                            feedback.textContent = 'Não foi possível iniciar o microfone. Atualize a página e tente novamente.';
+                        } else {
+                            recognizer.stop();
+                        }
+                        reconhecimentoAgendado = false;
+                    }
+                }, 300);
+            };
+
+            recognizer.addEventListener('start', () => {
+                feedback.textContent = 'Estou te ouvindo, diga apenas o seu nome.';
+            });
+
+            recognizer.addEventListener('result', async (event) => {
+                const transcript = event.results[0][0].transcript || '';
+                const nomeExtraido = extrairNome(transcript);
+
+                if (nomeExtraido) {
+                    nomeInput.value = nomeExtraido;
+                    feedback.textContent = `Nome capturado: ${nomeExtraido}`;
+                    nomeInput.focus();
+                    recognizer.stop();
+                    if (!envioAgendado) {
+                        envioAgendado = true;
+                        esconderRetry();
+                        mostrarLoading('Gerando áudio personalizado...');
+                        try {
+                            const respostaAudio = await fetch(`/audio_personalizado/${encodeURIComponent(nomeExtraido)}`);
+                            if (!respostaAudio.ok) {
+                                throw new Error('Falha ao gerar áudio');
+                            }
+                            esconderLoading();
+                            feedback.textContent = 'Tudo certo! Vamos avançar.';
+                            window.setTimeout(() => {
+                                formulario.requestSubmit();
+                            }, 400);
+                        } catch (err) {
+                            console.error(err);
+                            feedback.textContent = 'Não foi possível gerar o áudio personalizado.';
+                            esconderLoading();
+                            mostrarRetry('Clique em "Tentar novamente" para tentar de novo.');
+                        }
+                    }
+                } else {
+                    feedback.textContent = 'Não reconhecemos um nome claro. Por favor, tente novamente e diga apenas o seu nome.';
+                    mostrarRetry('Clique em "Tentar novamente" e diga apenas o seu nome.');
+                }
+            });
+
+            recognizer.addEventListener('error', () => {
+                feedback.textContent = 'Erro ao capturar áudio. Por favor, tente novamente.';
+                mostrarRetry('Clique em "Tentar novamente" e permita o acesso ao microfone.');
+                esconderLoading();
+            });
+
+            recognizer.addEventListener('end', () => {
+                reconhecimentoAgendado = false;
+                if (!envioAgendado) {
+                    esconderLoading();
+                }
+            });
+
+            if (audioPergunta) {
+                const tentarReproduzirAudio = () => {
+                    audioPergunta.play().catch(() => {
+                        feedback.textContent = 'Clique em qualquer lugar para iniciar o áudio.';
+                        document.addEventListener('click', () => {
+                            audioPergunta.play().catch(() => {});
+                        }, { once: true });
+                    });
+                };
+                tentarReproduzirAudio();
+                audioPergunta.addEventListener('ended', () => {
+                    iniciarReconhecimento();
+                });
+                audioPergunta.addEventListener('play', () => {
+                    reconhecimentoAgendado = false;
+                    feedback.textContent = '';
+                });
+            } else {
+                iniciarReconhecimento();
+            }
+
+            nomeInput.addEventListener('focus', () => {
+                if (!nomeInput.value.trim()) {
+                    iniciarReconhecimento();
+                }
+            });
+
+            retryBtn.addEventListener('click', () => {
+                esconderRetry();
+                esconderLoading();
+                nomeInput.value = '';
+                feedback.textContent = 'Preparando novamente...';
+                envioAgendado = false;
+                if (audioPergunta) {
+                    audioPergunta.currentTime = 0;
+                    const aoFinalizar = () => {
+                        audioPergunta.removeEventListener('ended', aoFinalizar);
+                        iniciarReconhecimento();
+                    };
+                    audioPergunta.addEventListener('ended', aoFinalizar);
+                    audioPergunta.play().catch(() => {
+                        audioPergunta.removeEventListener('ended', aoFinalizar);
+                        iniciarReconhecimento();
+                    });
+                    return;
+                }
+                iniciarReconhecimento();
+            });
+        })();
+    </script>
+</body>
+</html>
