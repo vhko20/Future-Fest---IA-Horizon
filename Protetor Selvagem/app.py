@@ -28,6 +28,17 @@ def pergunta_nome():
     """Página de pergunta do nome"""
     return send_file('pergunta_nome.html')
 
+@app.route("/apresentacaoIA.html")
+def apresentacao_ia():
+    """Página de apresentação do projeto Curupira"""
+    return send_file('apresentacaoIA.html')
+
+@app.route("/apresentacao_ODS.html")
+def apresentacao_ods():
+    """Página de apresentação da ODS 15"""
+    nome = request.args.get('nome', '')
+    return send_file('apresentacao_ODS.html')
+
 # Rota para descrição do mundo perfeito
 @app.route("/mundo_perfeito.html")
 def mundo_perfeito():
