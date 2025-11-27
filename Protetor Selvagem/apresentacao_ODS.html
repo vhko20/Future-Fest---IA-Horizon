@@ -216,7 +216,7 @@
 
         <div class="content">
             <div style="margin-bottom: 20px">
-                <a href="apresentacaoIA.html">
+                <a href="apresentacaoIA.html" id="back-link">
                     <button class="btn btn-secondary">← Voltar</button>
                 </a>
             </div>
@@ -225,7 +225,6 @@
             <div class="greeting"><h2><span style="color:#c0392b">ODS 15</span></h2></div>
 
 
-            <!-- Texto substituído conforme pedido pelo usuário -->
             <div class="vision">
                 <p>A<strong> ODS 15 (Objetivo de Desenvolvimento Sustentável 15)</strong> faz parte da Agenda 2030 da ONU e tem como foco proteger, 
                     recuperar e promover o uso sustentável dos ecossistemas terrestres. Seu objetivo é gerir de forma sustentável as florestas, 
@@ -233,13 +232,37 @@
                 </p>
                 <p>Vamos para uma pergunta.</p>
             </div>
-            <a href="mundo_perfeito.html">
+            <a href="mundo_perfeito.html" id="continue-link">
                 <button class="btn btn-secondary">Continuar</button>
             </a>
             
 
         </div>
     </div>
+    
+    <script>
+        (function() {
+            // Obtém o nome da URL (que foi passado pela apresentacaoIA.html)
+            const urlParams = new URLSearchParams(window.location.search);
+            const nome = urlParams.get('nome') || ''; 
+
+            // 1. Propagar o parâmetro 'nome' para o link "Continuar" (leva para mundo_perfeito.html)
+            const continueLink = document.getElementById('continue-link');
+            if (continueLink && nome) {
+                const currentHref = continueLink.getAttribute('href');
+                // Adiciona o nome à URL do botão Continuar
+                continueLink.setAttribute('href', `${currentHref}?nome=${encodeURIComponent(nome)}`);
+            }
+            
+            // 2. Propagar o parâmetro 'nome' para o link "Voltar" (leva para apresentacaoIA.html)
+            const backLink = document.getElementById('back-link');
+            if (backLink && nome) {
+                const currentHref = backLink.getAttribute('href');
+                // Adiciona o nome à URL do botão Voltar (Para que o nome persista no fluxo de volta)
+                backLink.setAttribute('href', `${currentHref}?nome=${encodeURIComponent(nome)}`);
+            }
+        })();
+    </script>
 </body>
 
 </html>
