@@ -222,25 +222,48 @@
             </div>
 
 
-            <div class="greeting">Olá <span style="color:#c0392b">nome</span>!</div>
+            <div class="greeting">Olá <span id="nome-usuario-exibicao" style="color:#c0392b"></span>!</div>
 
 
             <!-- Texto substituído conforme pedido pelo usuário -->
             <div class="vision">
-                <p><strong>Bem vindo (nome), sou o Curupira</strong>, primeiramente, vou começar te explicando algumas
-                    coisas, como os integrantes do grupo que fizeram este projeto e depois a ODS 15, nosso tema
-                    principal. Logo após, você irá ser redirecionado para uma página perguntando sobre a natureza e a
-                    tecnologia no futuro — você terá tempo, então não se preocupe em pensar no prompt para responder.
+                <p><strong>Bem vindo, sou o Curupira</strong>. <br>
+                    Fui escolhido porque represento a força da terra e da natureza tudo isso simboliza a nossa ODS.
+                    <br>
+                    Primeiramente, vou começar te explicando a ODS 15, nosso tema principal. Logo após, você será
+                    redirecionado para uma página que fará uma pergunta sobre a natureza e a tecnologia no futuro.
+                    
                 </p>
-                <p>Após você ter me dito seu prompt, vou gerar uma imagem com base nos seus pensamentos. Tome cuidado
-                    com o que vai pensar — o futuro depende de você. Estou ansioso para descobrir!</p>
+                <p>Depois de você me contar a sua ideia de futuro, vou gerar uma imagem.
+                    Tome cuidado com o que vai imaginar… o futuro depende de você.
+
+                    Estou ansioso para descobrir!</p>
             </div>
-            
+
             <a href="apresentacao_ODS.html">
                 <button class="btn btn-secondary">Continuar</button>
             </a>
         </div>
     </div>
+    <script>
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nome = urlParams.get('nome') || 'Usuário';
+
+            document.getElementById('nome-usuario-exibicao').textContent = nome;
+
+            const continueLink = document.getElementById('continue-link');
+            if (continueLink) {
+                const currentHref = continueLink.getAttribute('href');
+                continueLink.setAttribute('href', `${currentHref}?nome=${encodeURIComponent(nome)}`);
+            }
+            const backLink = document.getElementById('back-link');
+            if (backLink) {
+                const currentHref = backLink.getAttribute('href');
+
+            }
+        })();
+    </script>
 </body>
 
 </html>
